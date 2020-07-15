@@ -1,6 +1,25 @@
+# mydeck = [r+s for r in '23456789TJQKA' for s in 'SHDC'] 
+import random
+
 def poker(hands):
     '''Return the best hand: poker([hand,...]) => [hand,...]'''
     return allmax(hands, key=hand_rank)
+
+def deal(numhands, n=5, deck=[r+s for r in '23456789TJQKA' for s in 'SHDC']):
+    '''Shuffle the deck and deal out numhands n-card hands.'''
+    random.shuffle(deck)
+    return [deck[n*i : n*(i+1)] for i in range(numhands)]
+
+# My solution
+# def deal(numhands, n=5, deck=mydeck):
+#     deck = deck[:]
+#     hands = []
+#     for i in range(numhands):
+#         random_hand = random.sample(deck, n)
+#         hands.append(random_hand)
+#         for card in random_hand:
+#             deck.remove(card)
+#     return hands
 
 def allmax(iterable, key=None):
     '''Return a list of all items equal to the max of the iterable.'''
