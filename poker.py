@@ -55,12 +55,31 @@ def flush(hand):
     "Return True if all the cards have the same suit."
     return len(set([s for r,s in hand])) == 1
 
+def kind(n, ranks):
+    '''Return the first rank that this hand has exactly n of.
+    Return None if there is no n-of-a-kind in the hand.'''
+    for r in ranks:
+        if ranks.count(r) == n: return r
+
+    # My solution
+    # for i in range(14, 0, -1):
+    #     if ranks.count(i) == n:
+    #         return i
+
 
 def test():
     '''Test cases for the functions in poker program.'''
-    sf = '6C 7C 8C 9C TC'.split()
-    fk = '9D 9H 9S 9C 7D'.split()
-    fh = 'TD TC TH 7C 7D'.split()
+    sf = "6C 7C 8C 9C TC".split() # Straight Flush
+    fk = "9D 9H 9S 9C 7D".split() # Four of a Kind
+    fh = "TD TC TH 7C 7D".split() # Full House
+    tp = "5S 5D 9H 9C 6S".split() # Two pairs
+
+    fkranks = card_ranks(fk)
+    tpranks = card_ranks(tp)
+    assert kind(4, fkranks) == 9
+    assert kind(3, fkranks) == None
+    assert kind(2, fkranks) == None
+    assert kind(1, fkranks) == 7
 
     assert straight([9, 8, 7, 6, 5]) == True
     assert straight([9, 8, 8, 6, 5]) == False
