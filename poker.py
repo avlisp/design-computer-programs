@@ -24,20 +24,18 @@ def hand_rank(hand):
     else:                                          # high card
         return (0, ranks)
 
-def card_ranks(cards):
+def card_ranks(hand):
     '''Return a list of the ranks, sorted with higher first.'''
-    ranks = ['--23456789TJQKA'.index(r) for r,s in cards]
+    ranks = ['--23456789TJQKA'.index(r) for r, s in hand]
+    ranks.sort(reverse = True)
+    return [5, 4, 3, 2, 1] if ranks == [14, 5, 4, 3, 2] else ranks
     # My solution
-    # 
-    # ranks = [r for r,s in cards]
-    # higher_ranks = {'T': 10, 'J': 11, 'Q': 12, 'K': 13, 'A': 14}
-    # for r in ranks:
-    #     if not r.isdigit():
-    #         ranks[ranks.index(r)] = higher_ranks.get(r)
-    #     else:
-    #         ranks[ranks.index(r)] = int(r)
-    ranks.sort(reverse=True)
-    return ranks
+    # ranks = ['--23456789TJQKA'.index(r) for r, s in hand]
+    # ranks.sort(reverse = True)
+    # if ranks == [14, 5, 4, 3, 2]:
+    #     ranks[0] = 1
+    #     ranks.sort(reverse = True)
+    # return ranks
 
 def straight(ranks):
     '''Return True if the ordered ranks form a 5-card straight.'''
@@ -84,9 +82,11 @@ def test():
     fk = '9D 9H 9S 9C 7D'.split() # Four of a Kind
     fh = 'TD TC TH 7C 7D'.split() # Full House
     tp = '5S 5D 9H 9C 6S'.split() # Two pairs
+    al = 'AC 2D 4H 3D 5S'.split() # Ace-Low Straight
+    
+    assert straight(card_ranks(al)) == True 
 
-    tpranks = card_ranks(tp)
-    assert two_pair(tpranks) == (9, 5)
+    assert two_pair(card_ranks(tp)) == (9, 5)
     assert two_pair([7, 4, 4, 2, 1]) == None
 
     fkranks = card_ranks(fk)
