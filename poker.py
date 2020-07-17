@@ -1,5 +1,5 @@
-# mydeck = [r+s for r in '23456789TJQKA' for s in 'SHDC'] 
 import random
+
 
 def poker(hands):
     '''Return the best hand: poker([hand,...]) => [hand,...]'''
@@ -9,17 +9,6 @@ def deal(numhands, n=5, deck=[r+s for r in '23456789TJQKA' for s in 'SHDC']):
     '''Shuffle the deck and deal out numhands n-card hands.'''
     random.shuffle(deck)
     return [deck[n*i : n*(i+1)] for i in range(numhands)]
-
-# My solution
-# def deal(numhands, n=5, deck=mydeck):
-#     deck = deck[:]
-#     hands = []
-#     for i in range(numhands):
-#         random_hand = random.sample(deck, n)
-#         hands.append(random_hand)
-#         for card in random_hand:
-#             deck.remove(card)
-#     return hands
 
 def allmax(iterable, key=None):
     '''Return a list of all items equal to the max of the iterable.'''
@@ -54,26 +43,13 @@ def card_ranks(hand):
     ranks = ['--23456789TJQKA'.index(r) for r, s in hand]
     ranks.sort(reverse = True)
     return [5, 4, 3, 2, 1] if ranks == [14, 5, 4, 3, 2] else ranks
-    # My solution
-    # ranks = ['--23456789TJQKA'.index(r) for r, s in hand]
-    # ranks.sort(reverse = True)
-    # if ranks == [14, 5, 4, 3, 2]:
-    #     ranks[0] = 1
-    #     ranks.sort(reverse = True)
-    # return ranks
 
 def straight(ranks):
     '''Return True if the ordered ranks form a 5-card straight.'''
     return (max(ranks) - min(ranks) == 4) and len(set(ranks)) == 5
-    # My solution
-    #
-    # for i,r in enumerate(ranks):
-    #     if ranks[0] != r + i:
-    #         return False
-    # return True
 
 def flush(hand):
-    "Return True if all the cards have the same suit."
+    '''Return True if all the cards have the same suit.'''
     return len(set([s for r,s in hand])) == 1
 
 def kind(n, ranks):
@@ -81,10 +57,6 @@ def kind(n, ranks):
     Return None if there is no n-of-a-kind in the hand.'''
     for r in ranks:
         if ranks.count(r) == n: return r
-    # My solution
-    # for i in range(14, 0, -1):
-    #     if ranks.count(i) == n:
-    #         return i
 
 def two_pair(ranks):
     '''If there are two pair, return the two ranks as a
@@ -92,13 +64,6 @@ def two_pair(ranks):
     pair = kind(2, ranks)
     lowpair = kind(2, list(reversed(ranks)))
     if pair and lowpair != pair: return (pair, lowpair)
-    # My solution
-    # pairs = [r for r in ranks if ranks.count(r) == 2]
-    # pairs = list(set(pairs))
-    # if len(pairs) != 2:
-    #     return None
-    # pairs.sort(reverse=True)
-    # return tuple(pairs)
 
 
 def test():
